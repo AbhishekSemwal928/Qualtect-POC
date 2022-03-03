@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import Footer from "./Components/Footer/Footer"
+import Header from "./Components/Header/Header"
+import Routes from "./routes/Routes"
+import './App.css'
+import { useSelector } from "react-redux"
+import { useEffect } from "react"
+import { withRouter } from "react-router-dom"
 
-function App() {
+const App = (props) => {
+
+  const authStatus = useSelector((state) => state.authorization_reducer)
+
+  useEffect(() => {
+    if (authStatus) {
+      props.history.push('/home')
+    }
+    else {
+      props.history.push('/login')
+    }
+
+  },[authStatus,props.history])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      
+        <Header />
+        <div className="container">
+          <Routes />
+        </div>
+        <Footer />
+     
+    </>
+  )
 }
 
-export default App;
+export default withRouter(App)
