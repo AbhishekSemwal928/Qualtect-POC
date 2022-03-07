@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { loggedIn, userData } from '../../Redux/Action'
+import { loggedIn, showLoader, } from '../../Redux/Action'
 import './Login.css'
 
 const INITIAL_STATE = {
@@ -19,16 +19,19 @@ const Login = (props) => {
 
     const submitForm = (e) => {
         e.preventDefault()
-        if (formVal.userName === 'admin' && formVal.password === 'admin') {
-
-            dispatch(loggedIn(true))
-            dispatch(userData(formVal.userName))
-            props.history.push('/home')
-
-        }
-        else {
-            console.log("inccoorect ")
-        }
+        dispatch(showLoader(true))
+        setTimeout(() => {
+            if (formVal.userName === 'admin' && formVal.password === 'admin') {
+                dispatch(loggedIn(true))
+                props.history.push('/home')
+            }
+            else {
+                console.log("inccoorect ")
+                alert('Incorrect credentials')
+            }
+            dispatch(showLoader(false))
+        }, 3000);
+        // dispatch(showLoader(false))
     }
 
     const validateForm = () => {
@@ -43,40 +46,45 @@ const Login = (props) => {
 
     return (
         <div className='loginContainer'>
-            <h2>Login</h2>
-            <form
-                onSubmit={submitForm}
-                autoComplete='off'
-            >
-                <label htmlFor="userName">User Name</label>
-                <input
-                    type='text'
-                    id='userName'
-                    placeholder='User Name'
-                    name='userName'
-                    value={formVal.userName}
-                    onChange={setInputHandler}
-                />
-                <br />
-                <br />
-                <br />
-                <label htmlFor="pass">Password</label>
-                <input
-                    type='password'
-                    id='pass'
-                    placeholder='Password'
-                    name='password'
-                    value={formVal.password}
-                    onChange={setInputHandler}
-                />
-                <br />
-                <br />
-                <br />
-                <button
-                    type="submit"
-                    disabled={validateForm()}
-                >Submit</button>
-            </form>
+
+            <div className='container'>
+                <h1>Login Form</h1>
+                <form
+                    onSubmit={submitForm}
+                    autoComplete='off'
+                >
+                    <div className='userName'>
+                        <label htmlFor='username'>
+                            <input
+                                type="text"
+                                name='userName'
+                                value={formVal.userName}
+                                onChange={setInputHandler}
+                                placeholder="username"
+                            /></label><br />
+
+                    </div>
+                    <div className='password'>
+                        <label htmlFor='password'>
+                            <input
+                                type="password"
+                                name='password'
+                                value={formVal.password}
+                                onChange={setInputHandler}
+                                placeholder="Password"
+                            /></label><br />
+
+                    </div>
+                    <div>
+                        <button className='loginButton'
+                            type="submit"
+                            disabled={validateForm()}
+                        >
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

@@ -12,7 +12,7 @@ const Routes = () => {
 
             <Route path="/login" component={Login} />
             <Route path="/home" component={Home} />
-            
+
         </Switch>
     )
 }

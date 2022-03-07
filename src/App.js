@@ -24,7 +24,7 @@ const App = (props) => {
     <>
       
         <Header />
-        <div className="container">
+        <div className="containerMain">
           <Routes />
         </div>
         <Footer />

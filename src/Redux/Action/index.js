@@ -7,9 +7,9 @@ export const loggedIn = (bool) => {
   }
 }
 
-export const userData = (name)=>{
+export const showLoader = (bool) =>{
   return{
-    type:"USER_DATA",
-    payload:name
+    type:"SHOW_LOADER",
+    payload:bool
   }
 }
